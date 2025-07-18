@@ -9,6 +9,12 @@ function ResultScreen({ score }) {
     <div className="screen">
       <h2>Your Score: {score}</h2>
       <p>{message}</p>
+      <button
+        onClick={onContinueToVideo}
+        style={{ marginTop: '1.5rem', padding: '10px 20px', fontSize: '16px' }}
+      >
+        Continue to Facial Analysis Test
+      </button>
     </div>
   );
 }

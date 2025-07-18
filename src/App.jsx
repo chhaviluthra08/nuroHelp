@@ -3,6 +3,10 @@ import questions from './data/questions';
 import StartScreen from './components/StartScreen';
 import QuestionScreen from './components/QuestionScreen';
 import ResultScreen from './components/ResultScreen';
+import VideoTaskScreen from './components/VideoTaskScreen';
+import AudioTaskScreen from './components/AudioTaskScreen';
+
+
 
 function App() {
   const [step, setStep] = useState('start');
@@ -24,7 +28,7 @@ function App() {
       }
     });
     setScore(total);
-    setStep('result');
+    setStep('video'); //go to video first
   };
 
   const progressPercent = ((currentQ + 1) / questions.length) * 100;
@@ -120,10 +124,21 @@ function App() {
           </div>
         </div>
       )}
-
-      {step === 'result' && <ResultScreen score={score} />}
-    </>
-  );
+    {step === 'video' && (
+      <VideoTaskScreen onComplete={() => setStep('audio')} />
+    )}
+    
+    {step === 'audio' && (
+      <AudioTaskScreen onComplete={() => setStep('result')} />
+    )}
+    
+    {step === 'result' && (
+      <ResultScreen
+        score={score}
+        onRestart={() => setStep('start')} // or wherever you want to restart
+      />
+    )}
+</>
+);
 }
-
 export default App;
