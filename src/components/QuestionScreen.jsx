@@ -13,7 +13,7 @@ function QuestionScreen({
 
   return (
     
-    <div className="screen" style={{ width: '100%' }}>
+    <div className="screen" style={{ width: '100%', height: '100vh', overflowY: 'auto', padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'Poppins, sans-serif', color: '#333', textAlign: 'center' }}>
       <p style={{ fontSize: "2rem", marginBottom: '20px' }}>
         {question.question}
       </p>

@@ -10,7 +10,8 @@ const AudioTaskScreen = ({ onComplete }) => {
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      const recorder = new MediaRecorder(stream);
+      const options = { mimeType: 'audio/webm' };
+      const recorder = new MediaRecorder(stream, options);
       setMediaRecorder(recorder);
 
       recorder.ondataavailable = event => {
@@ -21,9 +22,29 @@ const AudioTaskScreen = ({ onComplete }) => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         const audioUrl = URL.createObjectURL(audioBlob);
         setAudioUrl(audioUrl);
+        uploadRecording(audioBlob); // Upload the recording
       };
     });
   }, []);
+
+  const uploadRecording = async (audioBlob) => {
+  const formData = new FormData();
+  formData.append("audio", audioBlob, "audio.webm");
+
+  try {
+    const response = await fetch("http://localhost:5000/upload_audio", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    localStorage.setItem("audioAnalysisResult", JSON.stringify(data));
+    console.log("Server response:", data);
+  } catch (error) {
+    console.error("Upload failed:", error);
+  }
+};
+
 
   const handleStart = () => {
     if (mediaRecorder) {
@@ -42,7 +63,7 @@ const AudioTaskScreen = ({ onComplete }) => {
 
   const handleComplete = () => {
     console.log("Moving to result screen...");
-    onComplete(); // ✅ move to result screen
+    onComplete(); 
   };
 
   return (
