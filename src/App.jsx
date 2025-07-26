@@ -6,8 +6,6 @@ import ResultScreen from './components/ResultScreen';
 import VideoTaskScreen from './components/VideoTaskScreen';
 import AudioTaskScreen from './components/AudioTaskScreen';
 
-
-
 function App() {
   const [step, setStep] = useState('start');
   const [currentQ, setCurrentQ] = useState(0);
@@ -28,17 +26,16 @@ function App() {
       }
     });
     setScore(total);
-    setStep('video'); //go to video first
+    setStep('video');
   };
 
   const progressPercent = ((currentQ + 1) / questions.length) * 100;
 
   return (
     <>
-
       <nav style={{
-        width: '100%',
-        padding: '10px 30px',
+        width: '99%',
+        padding: '10px 7.8px ',
         backgroundColor: '#604ccc',
         color: '#fff',
         display: 'flex',
@@ -48,66 +45,69 @@ function App() {
         top: 0,
         zIndex: 999
       }}>
-        <h2  style={{ margin: 0 }}>nuroHelp</h2>
+        <h1 style={{ margin: '0px 20px' }}> nuroHelp</h1>
       </nav>
 
       {step === 'start' && <StartScreen onStart={() => setStep('quiz')} />}
 
       {step === 'quiz' && (
-        <div style={{ padding: '0 20px' }}>
+        <div style={{ padding: '0 45px' }}>
           <div style={{
             display: 'flex',
-            justifyContent: 'center',
+            flexDirection: 'row',
             alignItems: 'center',
-            fontSize: '32px',
-            fontWeight: 'bold',
-            color: '#333',
-            margin: '30px 0 20px',
-          }}>
-            ASSESSMENT
-          </div>
-
-          {/* Progress Bar */}
-          <div style={{
-            maxWidth: '1000px',
-            margin: '0 auto 30px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '8px',
+            gap: '75px',
+            marginTop: '15px'
           }}>
             <div style={{
+              fontSize: '28px',
+              fontWeight: 'bold',
+              color: '#333',
+              whiteSpace: 'nowrap'
+            }}>
+              ASSESSMENT
+            </div>
+
+            <div style={{
+              maxWidth: '1000px',
               flex: 1,
-              height: '10px',
-              backgroundColor: '#ccc',
-              borderRadius: '5px',
-              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}>
               <div style={{
-                width: `${progressPercent}%`,
-                height: '100%',
-                backgroundColor: '#4caf50',
-                transition: 'width 0.3s ease-in-out',
-              }} />
-            </div>
-            <div style={{
-              fontSize: '16px',
-              fontWeight: 500,
-              color: '#333',
-              whiteSpace: 'nowrap',
-              minWidth: '100px',
-              textAlign: 'right',
-            }}>
-              {currentQ + 1} / {questions.length}
+                flex: 1,
+                height: '10px',
+                backgroundColor: '#ccc',
+                borderRadius: '5px',
+                overflow: 'hidden',
+              }}>
+                <div style={{
+                  width: `${progressPercent}%`,
+                  height: '100%',
+                  backgroundColor: '#4caf50',
+                  transition: 'width 0.3s ease-in-out',
+                }} />
+              </div>
+              <div style={{
+                fontSize: '20px',
+                fontWeight: 500,
+                color: '#333',
+                whiteSpace: 'nowrap',
+                minWidth: '80px',
+                textAlign: 'right',
+              }}>
+                {currentQ + 1} / {questions.length}
+              </div>
             </div>
           </div>
 
-          {/* Question Box */}
           <div style={{
-            maxWidth: '700px',
-            margin: '0 auto',
+            maxWidth: '55vw',
+            height: '75vh',
+            margin: '30px auto',
             backgroundColor: '#fff',
-            padding: '20px 20px 20px 40px',
+            padding: '10px 10px 0px 30px',
             borderRadius: '12px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           }}>
@@ -124,21 +124,28 @@ function App() {
           </div>
         </div>
       )}
-    {step === 'video' && (
-      <VideoTaskScreen onComplete={() => setStep('audio')} />
-    )}
-    
-    {step === 'audio' && (
-      <AudioTaskScreen onComplete={() => setStep('result')} />
-    )}
-    
-    {step === 'result' && (
-      <ResultScreen
-        score={score}
-        onRestart={() => setStep('start')} // or wherever you want to restart
-      />
-    )}
-</>
-);
+
+      {step === 'video' && (
+        <VideoTaskScreen onComplete={() => setStep('audio')} />
+      )}
+
+      {step === 'audio' && (
+        <AudioTaskScreen onComplete={() => setStep('result')} />
+      )}
+
+      {step === 'result' && (
+        <ResultScreen
+          score={score}
+          onRestart={() => {
+            setAnswers(Array(questions.length).fill(null));
+            setCurrentQ(0);
+            setStep('start');
+            setScore(0);
+          }}
+        />
+      )}
+    </>
+  );
 }
+
 export default App;

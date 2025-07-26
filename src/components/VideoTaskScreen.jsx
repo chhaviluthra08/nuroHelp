@@ -88,7 +88,7 @@ const VideoTaskScreen = ({ onComplete }) => {
 
   return (
     <div style={{
-      padding: '40px',
+      padding: '25px',
       maxWidth: '800px',
       margin: '0 auto',
       overflow: 'auto',
@@ -96,17 +96,17 @@ const VideoTaskScreen = ({ onComplete }) => {
       color: '#333',
       textAlign: 'center'
     }}>
-      <h2 style={{ fontSize: '28px', marginBottom: '16px', color: '#604ccc' }}>
+      <h1 style={{ color: '#604ccc' }}>
         Video Recording Task
-      </h2>
-      <p style={{ fontSize: '16px', color: '#555', marginBottom: '20px' }}>
+      </h1>
+      <p style={{ fontSize: '20px', color: '#555', marginBottom: '30px' }}>
         This video is being recorded to understand how your expressions relate to your focus and emotions. All data stays private.
       </p>
       <div style={{ border: '2px solid #604ccc', borderRadius: '12px', padding: '10px', display: 'inline-block', marginBottom: '20px', background: '#f9f9f9' }}>
-        <video ref={videoRef} autoPlay muted style={{ width: '100%', maxWidth: '500px', borderRadius: '10px' }} />
+        <video ref={videoRef} autoPlay muted style={{ width: '30vw', maxWidth: '500px', borderRadius: '10px' }} />
       </div>
-      <div style={{ marginBottom: '20px' }}>
-        <p style={{ fontSize: '18px', lineHeight: '1.6' }}>Now please raise both your hands and look straight at the camera for 5 seconds.</p>
+      <div style={{ marginBottom: '20px', color: '#555' }}>
+        <p style={{ fontSize: '20px', lineHeight: '1.6' }}>Now please raise both your hands and look straight at the camera for 5 seconds.</p>
       </div>
       <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', justifyContent: 'center' }}>
         {!isRecording && !videoUrl && (
@@ -140,7 +140,7 @@ const buttonStyle = {
   border: 'none',
   borderRadius: '8px',
   cursor: 'pointer',
-  fontSize: '16px'
+  fontSize: '22px'
 };
 
 export default VideoTaskScreen;
